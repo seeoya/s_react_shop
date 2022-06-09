@@ -1,10 +1,18 @@
 // react-bootstrap 홈페이지에서 npm으로 install
 // 대문자 컴포넌트 (Button, Navbar, Nav 등등...)는 import 필요
+import { useState } from "react";
 import { Button, Navbar, Container, Nav, Row, Col } from "react-bootstrap";
 import logo from "./logo.svg";
 import "./App.css";
+// js는 .js 없어도 사용 가능
+// import { a, b } from "./data";
+import data from "./data";
+
+let _PUBLIC_URL = process.env.PUBLIC_URL;
 
 function App() {
+    let [shoes, setShoes] = useState(data);
+
     return (
         <div className="App">
             <Navbar bg="dark" variant="dark" sticky="top">
@@ -17,22 +25,34 @@ function App() {
                     </Nav>
                 </Container>
             </Navbar>
-
             <div className="main-banner"></div>
 
-            <Container>
+            <img src={_PUBLIC_URL + "/img/sub_banner1.jpg"} alt="" />
+            <Container className="sub-banner">
                 <Row>
-                    <Col sm={8}>sm=8</Col>
-                    <Col sm={4}>sm=4</Col>
-                </Row>
-                <Row>
-                    <Col sm>sm=true</Col>
-                    <Col sm>sm=true</Col>
-                    <Col sm>sm=true</Col>
+                    {shoes.map((shoes, i) => {
+                        return <SubBannerItem key={shoes.id} shoes={shoes} tel={"010" + i} />;
+                    })}
                 </Row>
             </Container>
         </div>
     );
 }
 
+function SubBannerItem(props) {
+    let { shoes, tel } = props;
+
+    return (
+        <Col sm={4} className="item">
+            <div className="img-wrap">
+                <img src={_PUBLIC_URL + "/img/banner/sub_banner" + shoes.id + ".jpg"} alt="" />{" "}
+            </div>
+            <div>
+                <h4>{shoes.title}</h4>
+                <div>{shoes.content}</div>
+                <div>{tel}</div>
+            </div>
+        </Col>
+    );
+}
 export default App;
