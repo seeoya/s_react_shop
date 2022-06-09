@@ -1,58 +1,55 @@
 // react-bootstrap 홈페이지에서 npm으로 install
 // 대문자 컴포넌트 (Button, Navbar, Nav 등등...)는 import 필요
-import { useState } from "react";
+// import { useState } from "react";
+import { Route, Routes, Link } from "react-router-dom";
 import { Button, Navbar, Container, Nav, Row, Col } from "react-bootstrap";
+import { useState } from "react";
+
 import logo from "./logo.svg";
-import "./App.css";
+
 // js는 .js 없어도 사용 가능
 // import { a, b } from "./data";
-import data from "./data";
 
-let _PUBLIC_URL = process.env.PUBLIC_URL;
+import Detail from "./pages/Detail";
+import Main from "./pages/Main";
+
+import "./App.css";
+
+// 라이브러리 가져오기
+
+// let _PUBLIC_URL = process.env.PUBLIC_URL;
 
 function App() {
-    let [shoes, setShoes] = useState(data);
-
     return (
-        <div className="App">
-            <Navbar bg="dark" variant="dark" sticky="top">
-                <Container>
-                    <Navbar.Brand href="#home">쇼핑몰 DEMO</Navbar.Brand>
-                    <Nav className="me-auto">
-                        <Nav.Link href="#home">Home</Nav.Link>
-                        <Nav.Link href="#features">a</Nav.Link>
-                        <Nav.Link href="#pricing">Pricing</Nav.Link>
-                    </Nav>
-                </Container>
-            </Navbar>
-            <div className="main-banner"></div>
+        <>
+            <div className="App">
+                <Navbar bg="dark" variant="dark" sticky="top">
+                    <Container>
+                        <Navbar.Brand>
+                            <Link to="/">쇼핑몰 DEMO</Link>
+                        </Navbar.Brand>
+                        <Nav className="me-auto">
+                            <Nav.Link>
+                                <Link to="/">홈</Link>
+                            </Nav.Link>
+                            <Nav.Link>
+                                <Link to="/detail">디테일</Link>
+                            </Nav.Link>
+                            <Nav.Link>
+                                <Link to="/about">어바웃</Link>
+                            </Nav.Link>
+                        </Nav>
+                    </Container>
+                </Navbar>
 
-            <img src={_PUBLIC_URL + "/img/sub_banner1.jpg"} alt="" />
-            <Container className="sub-banner">
-                <Row>
-                    {shoes.map((shoes, i) => {
-                        return <SubBannerItem key={shoes.id} shoes={shoes} tel={"010" + i} />;
-                    })}
-                </Row>
-            </Container>
-        </div>
+                <Routes>
+                    <Route path="/" element={<Main />} />
+                    <Route path="/detail" element={<Detail />} />
+                    <Route path="/about" element={<div>어바웃</div>} />
+                </Routes>
+            </div>
+        </>
     );
 }
 
-function SubBannerItem(props) {
-    let { shoes, tel } = props;
-
-    return (
-        <Col sm={4} className="item">
-            <div className="img-wrap">
-                <img src={_PUBLIC_URL + "/img/banner/sub_banner" + shoes.id + ".jpg"} alt="" />{" "}
-            </div>
-            <div>
-                <h4>{shoes.title}</h4>
-                <div>{shoes.content}</div>
-                <div>{tel}</div>
-            </div>
-        </Col>
-    );
-}
 export default App;
