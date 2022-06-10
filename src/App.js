@@ -19,12 +19,16 @@ import "./App.css";
 
 // 라이브러리 가져오기
 
-// let _PUBLIC_URL = process.env.PUBLIC_URL;
+import data from "./data/data";
+
+let _PUBLIC_URL = process.env.PUBLIC_URL;
 
 function App() {
     // 페이지 이동 함수
     // <Link to={주소}> </Link> 대신 onClick={() => navigate("path")}로 기존 항목에 사용 가능
     let navigate = useNavigate();
+
+    let [shoes, setShoes] = useState(data);
 
     return (
         <>
@@ -47,9 +51,15 @@ function App() {
                     </Container>
                 </Navbar>
 
+                <div className="abc">테스트용 app의 디브</div>
                 <Routes>
-                    <Route path="/" element={<Main />} />
-                    <Route path="/detail" element={<Detail />}></Route>
+                    <Route path="/" element={<Main shoes={shoes} data={data} />} />
+                    <Route path="/s_react_shop" to="/" />
+                    {/* <Route path="/detail" element={<Detail shoes={shoes} />}></Route> */}
+
+                    {/* url parameter :id 이용 */}
+                    <Route path="/detail/:id" element={<Detail shoes={shoes} />}></Route>
+
                     <Route path="/about" element={<About />}>
                         {/* Nested Routes */}
                         {/* 태그를 열고 사이에 넣어줌 */}

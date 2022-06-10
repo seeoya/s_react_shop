@@ -1,11 +1,10 @@
 import { Button, Navbar, Container, Nav, Row, Col } from "react-bootstrap";
 import { useState } from "react";
-import data from "../data/data";
 
 let _PUBLIC_URL = process.env.PUBLIC_URL;
 
-function Main() {
-    let [shoes, setShoes] = useState(data);
+function Main(props) {
+    let { shoes, data } = props;
 
     return (
         <>
@@ -29,7 +28,7 @@ function SubBannerItem(props) {
     return (
         <Col sm={4} className="item">
             <div className="img-wrap">
-                <img src={_PUBLIC_URL + "/img/banner/sub_banner" + shoes.id + ".jpg"} alt="" />{" "}
+                <img src={_PUBLIC_URL + "/img/banner/sub_banner" + shoes.id + ".jpg"} alt="" />
             </div>
             <div>
                 <h4>{shoes.title}</h4>
