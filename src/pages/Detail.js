@@ -23,7 +23,8 @@ let DefaultBox = styled.div`
     }
 `;
 
-let DdBtn = styled.button`
+// 선언한 스타일 재사용
+let DdBtn = styled(DfBtn)`
     // props 가져오기, if문 사용 가능
     color: ${(props) => props.color || "blue"};
 

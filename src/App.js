@@ -53,11 +53,10 @@ function App() {
 
                 <div className="abc">테스트용 app의 디브</div>
                 <Routes>
-                    <Route path="/" element={<Main shoes={shoes} data={data} />} />
-                    <Route path="/s_react_shop" to="/" />
-                    {/* <Route path="/detail" element={<Detail shoes={shoes} />}></Route> */}
+                    <Route exact path="/" element={<Main shoes={shoes} data={data} />} />
 
-                    {/* url parameter :id 이용 */}
+                    {/* <Route path="/detail" element={<Detail shoes={shoes} />}></Route> */}
+                    {/* 에서 파라미터를 추가함. url parameter :id 이용 */}
                     <Route path="/detail/:id" element={<Detail shoes={shoes} />}></Route>
 
                     <Route path="/about" element={<About />}>
