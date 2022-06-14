@@ -1,7 +1,8 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Nav, Link } from "react-bootstrap";
 import styled, { css } from "styled-components";
+import { Context1 } from "./../App";
 
 let _PUBLIC_URL = process.env.PUBLIC_URL;
 
@@ -39,6 +40,13 @@ let DdBtn = styled(DfBtn)`
 `;
 
 function Detail(props) {
+    // 보관함 내용 사용. object 형식으로 담김
+    // let a = useContext(Context1);
+    // console.log(a);
+    let { stock, shoes } = useContext(Context1);
+    console.log(stock);
+    console.log(shoes);
+
     let [ttestt, setTtestt] = useState(true);
     let [iValue, setIValue] = useState("");
     let [tab, setTab] = useState(0);
@@ -87,6 +95,7 @@ function Detail(props) {
     if (shoe) {
         return (
             <>
+                {stock}
                 <div>{iValue}</div>
                 <input type="text" placeholder="숫자만 입력하세요." onChange={changeIValue} value={iValue} />
                 <br />
@@ -158,6 +167,23 @@ function Detail(props) {
 
 // props 재지정이 귀찮으면 바로 parameter에서 {} 로 props 가져올 수 있음
 function TabInner({ tab }) {
+    let [fade, setFade] = useState("");
+
+    // 자식의 자식 컴포넌트에서도 context 사용 가능
+    let { stock } = useContext(Context1);
+
+    useEffect(() => {
+        // automatic batching 기능.
+        // 가까이에 state 변경하는 함수가 있으면 한번만 변경됨
+        setTimeout(() => {
+            setFade("end");
+        }, 100);
+
+        return () => {
+            setFade("");
+        };
+    }, [tab]);
+
     // let { tab } = props;
 
     // switch (tab) {
@@ -171,7 +197,12 @@ function TabInner({ tab }) {
 
     // array 이용해서 이런 식으로도 되겠네요
     // 생각 못했네...
-    return [<div>내용0입니다</div>, <div>내용1입니다</div>, <div>내용2라네요</div>][tab];
+    return (
+        <div className={`start ${fade}`}>
+            {stock}
+            {[<div>내용0입니다</div>, <div>내용1입니다</div>, <div>내용2라네요</div>][tab]}
+        </div>
+    );
 }
 
 export default Detail;

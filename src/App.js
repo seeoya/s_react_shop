@@ -3,7 +3,7 @@
 // import { useState } from "react";
 import { Route, Routes, Link, useNavigate, Outlet } from "react-router-dom";
 import { Button, Navbar, Container, Nav, Row, Col } from "react-bootstrap";
-import { useState } from "react";
+import { createContext, useState } from "react";
 
 import logo from "./logo.svg";
 
@@ -23,11 +23,15 @@ import data from "./data/data";
 
 let _PUBLIC_URL = process.env.PUBLIC_URL;
 
+// state 보관함인 context 생성
+export let Context1 = createContext();
+
 function App() {
     // 페이지 이동 함수
     // <Link to={주소}> </Link> 대신 onClick={() => navigate("path")}로 기존 항목에 사용 가능
     let navigate = useNavigate();
 
+    let [stock, setStock] = useState(321);
     let [shoes, setShoes] = useState(data);
     let [loading, setLoading] = useState(false);
 
@@ -60,7 +64,15 @@ function App() {
 
                     {/* <Route path="/detail" element={<Detail shoes={shoes} />}></Route> */}
                     {/* 에서 파라미터를 추가함. url parameter :id 이용 */}
-                    <Route path="/detail/:id" element={<Detail shoes={shoes} />}></Route>
+                    <Route
+                        path="/detail/:id"
+                        element={
+                            // state공유를 원하면 context로 감싸기
+                            <Context1.Provider value={{ stock, shoes }}>
+                                <Detail shoes={shoes} />
+                            </Context1.Provider>
+                        }
+                    ></Route>
 
                     <Route path="/about" element={<About />}>
                         {/* Nested Routes */}
