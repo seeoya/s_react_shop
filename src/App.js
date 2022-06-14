@@ -29,9 +29,12 @@ function App() {
     let navigate = useNavigate();
 
     let [shoes, setShoes] = useState(data);
+    let [loading, setLoading] = useState(false);
 
     return (
         <>
+            {loading && <Loading />}
+
             <div className="App">
                 <Navbar bg="dark" variant="dark" sticky="top">
                     <Container>
@@ -53,7 +56,7 @@ function App() {
 
                 <div className="abc">테스트용 app의 디브</div>
                 <Routes>
-                    <Route exact path="/" element={<Main shoes={shoes} data={data} />} />
+                    <Route exact path="/" element={<Main shoes={shoes} setShoes={setShoes} data={data} setLoading={setLoading} />} />
 
                     {/* <Route path="/detail" element={<Detail shoes={shoes} />}></Route> */}
                     {/* 에서 파라미터를 추가함. url parameter :id 이용 */}
@@ -77,6 +80,16 @@ function App() {
                 </Routes>
             </div>
         </>
+    );
+}
+
+function Loading() {
+    return (
+        <div className="loading">
+            <div className="loading-wrap">
+                <div className="loading-wheel"></div>
+            </div>
+        </div>
     );
 }
 
