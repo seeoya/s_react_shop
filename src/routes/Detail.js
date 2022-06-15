@@ -3,6 +3,8 @@ import { useParams } from "react-router-dom";
 import { Nav, Link } from "react-bootstrap";
 import styled, { css } from "styled-components";
 import { Context1 } from "./../App";
+import { useSelector, useDispatch } from "react-redux/es/exports";
+import { addCart } from "../store";
 
 let _PUBLIC_URL = process.env.PUBLIC_URL;
 
@@ -92,6 +94,11 @@ function Detail(props) {
         // arr[id]로 찾을 경우, 정렬 등으로 state 변경 시 문제 발생
         shoe = props.shoes.find((o) => o.id == id);
 
+    let state = useSelector((state) => {
+        return state;
+    });
+    let dispatch = useDispatch();
+
     if (shoe) {
         return (
             <>
@@ -125,7 +132,9 @@ function Detail(props) {
                             </h4>
                             <p>{shoe.content}</p>
                             <p>{shoe.price}</p>
-                            <button className="btn btn-danger">주문하기</button>
+                            <button className="btn btn-danger" onClick={() => dispatch(addCart(shoe))}>
+                                주문하기
+                            </button>
                         </div>
                     </div>
                 </div>

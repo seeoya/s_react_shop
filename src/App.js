@@ -10,11 +10,11 @@ import logo from "./logo.svg";
 // js는 .js 없어도 사용 가능
 // import { a, b } from "./data";
 
-import Detail from "./pages/Detail";
-import Main from "./pages/Main";
-import About from "./pages/About";
-import Event from "./pages/Event";
-import Cart from "./pages/Cart";
+import Detail from "./routes/Detail";
+import Main from "./routes/Main";
+import About from "./routes/About";
+import Event from "./routes/Event";
+import Cart from "./routes/Cart";
 
 import "./App.css";
 
