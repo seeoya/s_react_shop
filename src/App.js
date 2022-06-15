@@ -2,7 +2,7 @@
 // 대문자 컴포넌트 (Button, Navbar, Nav 등등...)는 import 필요
 // import { useState } from "react";
 import { Route, Routes, Link, useNavigate, Outlet } from "react-router-dom";
-import { Button, Navbar, Container, Nav, Row, Col } from "react-bootstrap";
+import { Navbar, Container, Nav, NavDropdown } from "react-bootstrap";
 import { createContext, useState } from "react";
 
 import logo from "./logo.svg";
@@ -14,6 +14,7 @@ import Detail from "./pages/Detail";
 import Main from "./pages/Main";
 import About from "./pages/About";
 import Event from "./pages/Event";
+import Cart from "./pages/Cart";
 
 import "./App.css";
 
@@ -47,9 +48,26 @@ function App() {
                         </Navbar.Brand>
                         <Nav className="me-auto">
                             <Nav.Link onClick={() => navigate("/")}>홈</Nav.Link>
-                            <Nav.Link onClick={() => navigate("/detail")}>디테일</Nav.Link>
+                            <NavDropdown title="디테일" id="nav-dropdown">
+                                <NavDropdown.Item eventKey="4.1" onClick={() => navigate("/detail/0")}>
+                                    0
+                                </NavDropdown.Item>
+                                <NavDropdown.Item eventKey="4.2" onClick={() => navigate("/detail/1")}>
+                                    1
+                                </NavDropdown.Item>
+                                <NavDropdown.Divider />
+                                <NavDropdown.Item eventKey="4.3" onClick={() => navigate("/detail/2")}>
+                                    2
+                                </NavDropdown.Item>
+                                <NavDropdown.Item eventKey="4.4" onClick={() => navigate("/detail/3")}>
+                                    3
+                                </NavDropdown.Item>
+                            </NavDropdown>
+                            {/* <Nav.Link onClick={() => navigate("/detail/0")}>디테일</Nav.Link> */}
+
                             <Nav.Link onClick={() => navigate("/about")}>어바웃</Nav.Link>
                             <Nav.Link onClick={() => navigate("/event")}>이벤트</Nav.Link>
+                            <Nav.Link onClick={() => navigate("/cart")}>장바구니</Nav.Link>
 
                             {/* 숫자 넣으면 앞으로 뒤로가기 됨 */}
                             <Nav.Link onClick={() => navigate(1)}>앞으로가기</Nav.Link>
@@ -86,6 +104,7 @@ function App() {
                         <Route path="one" element={<div>첫 주문시 양배추즙 서비스</div>} />
                         <Route path="two" element={<div>생일기념 쿠폰받기</div>} />
                     </Route>
+                    <Route path="/cart" element={<Cart />}></Route>
 
                     {/* 모든 페이지 (404 페이지) */}
                     <Route path="*" element={<div>없는 페이지. 404 페이지</div>} />
