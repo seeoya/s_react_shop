@@ -28,18 +28,21 @@ let cart = createSlice({
             });
 
             state[n].count += num;
-            // state.find((o) => {
-            //     if (o.id == id) {
-            //         o.count += num;
-            //     }
-            // });
         },
         addCart(state, action) {
-            state.push({ id: state[state.length - 1].id + 1, name: action.payload.title, count: 2141 });
+            let { id, title } = action.payload;
 
-            // let { title: name } = action.payload;
+            let n = state.findIndex((o) => {
+                return o.id == id;
+            });
 
-            // state.push({ id: state[state.length].id + 1, name: name, count: 321 });
+            if (n < 0) {
+                state.push({ id: id, name: title, count: 1 });
+                alert("장바구니에 상품이 추가되었습니다.");
+            } else {
+                state[n].count++;
+                alert("장바구니에 상품이 존재합니다.\n수량이 추가되었습니다.");
+            }
         }
     }
 });

@@ -46,8 +46,6 @@ function Detail(props) {
     // let a = useContext(Context1);
     // console.log(a);
     let { stock, shoes } = useContext(Context1);
-    console.log(stock);
-    console.log(shoes);
 
     let [ttestt, setTtestt] = useState(true);
     let [iValue, setIValue] = useState("");

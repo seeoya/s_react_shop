@@ -9,6 +9,15 @@ function Event() {
 
             <h4>오늘의 이벤트</h4>
             <Outlet></Outlet>
+
+            {
+                {
+                    a: <div>a입니다</div>,
+                    b: <div>b입니다</div>,
+                    c: <div>c입니다</div>,
+                    d: <div>d입니다</div>
+                }["c"]
+            }
         </>
     );
 }
