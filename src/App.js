@@ -3,7 +3,8 @@
 // import { useState } from "react";
 import { Route, Routes, Link, useNavigate, Outlet } from "react-router-dom";
 import { Navbar, Container, Nav, NavDropdown } from "react-bootstrap";
-import { createContext, useState } from "react";
+import { createContext, useEffect, useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
 
 import logo from "./logo.svg";
 
@@ -28,6 +29,14 @@ let _PUBLIC_URL = process.env.PUBLIC_URL;
 export let Context1 = createContext();
 
 function App() {
+    // 최근 본 글 목록
+    // detail.js로 이동
+    // useEffect(() => {
+    //     if (!localStorage.getItem("recent")) {
+    //         localStorage.setItem("recent", JSON.stringify([]));
+    //     }
+    // });
+
     // 페이지 이동 함수
     // <Link to={주소}> </Link> 대신 onClick={() => navigate("path")}로 기존 항목에 사용 가능
     let navigate = useNavigate();
@@ -35,6 +44,20 @@ function App() {
     let [stock, setStock] = useState(321);
     let [shoes, setShoes] = useState(data);
     let [loading, setLoading] = useState(false);
+
+    // localstorage 사용 + json
+    let obj = { name: "kim" };
+    // 문자열로 변환
+    localStorage.setItem("data", JSON.stringify(obj));
+    // text로 가져옴
+    let text = localStorage.getItem("data");
+    // console.log(text);
+    // console.log(JSON.parse(text));
+
+    let state = useSelector((state) => {
+        return state;
+    });
+    let dispatch = useDispatch();
 
     return (
         <>
@@ -109,6 +132,10 @@ function App() {
                     {/* 모든 페이지 (404 페이지) */}
                     <Route path="*" element={<div>없는 페이지. 404 페이지</div>} />
                 </Routes>
+
+                <Recent recent={state.recent} />
+                <h3>스테이트</h3>
+                {state.recent}
             </div>
         </>
     );
@@ -119,6 +146,32 @@ function Loading() {
         <div className="loading">
             <div className="loading-wrap">
                 <div className="loading-wheel"></div>
+            </div>
+        </div>
+    );
+}
+
+function Recent(props) {
+    let recent = props.recent;
+    console.log(recent);
+
+    return (
+        <div>
+            <h4>최근 본 아이템</h4>
+            <div>
+                {recent.map((o) => {
+                    let fData = data.find((p) => p.id == o);
+
+                    if (fData) {
+                        return (
+                            <div key={o}>
+                                <Link to={`/detail/${fData.id}`}>{fData.title}</Link>
+                            </div>
+                        );
+                    } else {
+                        return <div>일치 상품 없음</div>;
+                    }
+                })}
             </div>
         </div>
     );

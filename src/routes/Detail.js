@@ -4,7 +4,7 @@ import { Nav, Link } from "react-bootstrap";
 import styled, { css } from "styled-components";
 import { Context1 } from "./../App";
 import { useSelector, useDispatch } from "react-redux/es/exports";
-import { addCart } from "../store";
+import { addCart, changeRecent } from "../store";
 
 let _PUBLIC_URL = process.env.PUBLIC_URL;
 
@@ -51,6 +51,11 @@ function Detail(props) {
     let [iValue, setIValue] = useState("");
     let [tab, setTab] = useState(0);
 
+    let state = useSelector((state) => {
+        return state;
+    });
+    let dispatch = useDispatch();
+
     useEffect(() => {
         // mount, update 될 때 (렌더링 될 때) 실행됨.
         // html 렌더링 이후에 작동.
@@ -87,15 +92,18 @@ function Detail(props) {
         }
     }, [iValue]);
 
+    useEffect(() => {
+        if (shoe) {
+            dispatch(changeRecent(shoe.id));
+        }
+
+        // dispatch();
+    });
+
     // :id 자리에 적은 거
     let { id } = useParams(),
         // arr[id]로 찾을 경우, 정렬 등으로 state 변경 시 문제 발생
         shoe = props.shoes.find((o) => o.id == id);
-
-    let state = useSelector((state) => {
-        return state;
-    });
-    let dispatch = useDispatch();
 
     if (shoe) {
         return (
