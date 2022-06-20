@@ -1,29 +1,36 @@
 // react-bootstrap 홈페이지에서 npm으로 install
 // 대문자 컴포넌트 (Button, Navbar, Nav 등등...)는 import 필요
 // import { useState } from "react";
+import { Suspense, createContext, lazy, useEffect, useState } from "react";
 import { Route, Routes, Link, useNavigate, Outlet } from "react-router-dom";
 import { Navbar, Container, Nav, NavDropdown } from "react-bootstrap";
-import { createContext, useEffect, useState } from "react";
+import styled, { css, keyframes } from "styled-components";
 import { useSelector, useDispatch } from "react-redux";
 import axios from "axios";
 
 import logo from "./logo.svg";
+import "./App.css";
+
+import data from "./data/data";
+import { useQuery } from "react-query";
 
 // js는 .js 없어도 사용 가능
 // import { a, b } from "./data";
 
-import Detail from "./routes/Detail";
 import Main from "./routes/Main";
 import About from "./routes/About";
-import Event from "./routes/Event";
-import Cart from "./routes/Cart";
+// import Event from "./routes/Event";
 
-import "./App.css";
+// import Detail from "./routes/Detail";
+// import Cart from "./routes/Cart";
+
+// lazy import
+// 필요 시 요청하여 import
+const Detail = lazy(() => import("./routes/Detail.js"));
+const Cart = lazy(() => import("./routes/Cart.js"));
+const Event = lazy(() => import("./routes/Event.js"));
 
 // 라이브러리 가져오기
-
-import data from "./data/data";
-import { useQuery } from "react-query";
 
 let _PUBLIC_URL = process.env.PUBLIC_URL;
 
@@ -81,6 +88,7 @@ function App() {
 
     return (
         <>
+            {/* <Loading /> */}
             {result.status}
             {/* result.data 하면 안찍힘... 로딩이 안대서... */}
             {mem.name}
@@ -132,38 +140,41 @@ function App() {
                 </Navbar>
 
                 <div className="abc">테스트용 app의 디브</div>
-                <Routes>
-                    <Route exact path="/" element={<Main shoes={shoes} setShoes={setShoes} data={data} setLoading={setLoading} />} />
 
-                    {/* <Route path="/detail" element={<Detail shoes={shoes} />}></Route> */}
-                    {/* 에서 파라미터를 추가함. url parameter :id 이용 */}
-                    <Route
-                        path="/detail/:id"
-                        element={
-                            // state공유를 원하면 context로 감싸기
-                            <Context1.Provider value={{ stock, shoes }}>
-                                <Detail shoes={shoes} />
-                            </Context1.Provider>
-                        }
-                    ></Route>
+                <Suspense fallback={<Loading />}>
+                    <Routes>
+                        <Route exact path="/" element={<Main shoes={shoes} setShoes={setShoes} data={data} setLoading={setLoading} />} />
 
-                    <Route path="/about" element={<About />}>
-                        {/* Nested Routes */}
-                        {/* 태그를 열고 사이에 넣어줌 */}
-                        {/* /about/member */}
-                        <Route path="member" element={<div>멤버임</div>} />
-                        {/* /about/location */}
-                        <Route path="location" element={<div>로케이션임</div>} />
-                    </Route>
-                    <Route path="/event" element={<Event />}>
-                        <Route path="one" element={<div>첫 주문시 양배추즙 서비스</div>} />
-                        <Route path="two" element={<div>생일기념 쿠폰받기</div>} />
-                    </Route>
-                    <Route path="/cart" element={<Cart />}></Route>
+                        {/* <Route path="/detail" element={<Detail shoes={shoes} />}></Route> */}
+                        {/* 에서 파라미터를 추가함. url parameter :id 이용 */}
+                        <Route
+                            path="/detail/:id"
+                            element={
+                                // state공유를 원하면 context로 감싸기
+                                <Context1.Provider value={{ stock, shoes }}>
+                                    <Detail shoes={shoes} />
+                                </Context1.Provider>
+                            }
+                        ></Route>
 
-                    {/* 모든 페이지 (404 페이지) */}
-                    <Route path="*" element={<div>없는 페이지. 404 페이지</div>} />
-                </Routes>
+                        <Route path="/about" element={<About />}>
+                            {/* Nested Routes */}
+                            {/* 태그를 열고 사이에 넣어줌 */}
+                            {/* /about/member */}
+                            <Route path="member" element={<div>멤버임</div>} />
+                            {/* /about/location */}
+                            <Route path="location" element={<div>로케이션임</div>} />
+                        </Route>
+                        <Route path="/event" element={<Event />}>
+                            <Route path="one" element={<div>첫 주문시 양배추즙 서비스</div>} />
+                            <Route path="two" element={<div>생일기념 쿠폰받기</div>} />
+                        </Route>
+                        <Route path="/cart" element={<Cart />}></Route>
+
+                        {/* 모든 페이지 (404 페이지) */}
+                        <Route path="*" element={<div>없는 페이지. 404 페이지</div>} />
+                    </Routes>
+                </Suspense>
 
                 <Recent recent={state.recent} />
                 <h3>스테이트</h3>
@@ -174,6 +185,58 @@ function App() {
 }
 
 function Loading() {
+    //
+    // let LoadingKey = keyframes`
+    //     0% {
+    //         transform: rotate(0deg);
+    //     }
+    //     30% {
+    //         border-top-color: palegoldenrod;
+    //         border-bottom-color: palegreen;
+    //     }
+    //     80% {
+    //         transform: rotate(360deg);
+    //     }
+    //     100% {
+    //         transform: rotate(360deg);
+    //     }`;
+
+    // let LoadingBox = styled.div`
+    //     display: block;
+    //     position: fixed;
+    //     top: 0;
+    //     right: 0;
+    //     bottom: 0;
+    //     left: 0;
+    //     background: rgba(0, 0, 0, 0.7);
+    //     z-index: 9000;
+    // `;
+
+    // let LoadingWrap = styled.div`
+    //     display: flex;
+    //     width: 100%;
+    //     height: 100%;
+    //     justify-content: center;
+    //     align-items: center;
+    // `;
+
+    // let LoadingWheel = styled.div`
+    //     display: block;
+    //     width: 130px;
+    //     height: 130px;
+    //     background: transparent;
+    //     border: 15px double #fff;
+    //     border-radius: 100px;
+    //     border-top-color: pink;
+    //     border-bottom-color: skyblue;
+
+    //     animation-name: ${LoadingKey};
+    //     animation-duration: 1.3s;
+    //     animation-iteration-count: infinite;
+    // `;
+
+    console.log("로딩 실행");
+
     return (
         <div className="loading">
             <div className="loading-wrap">
