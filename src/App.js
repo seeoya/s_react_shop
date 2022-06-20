@@ -5,6 +5,7 @@ import { Route, Routes, Link, useNavigate, Outlet } from "react-router-dom";
 import { Navbar, Container, Nav, NavDropdown } from "react-bootstrap";
 import { createContext, useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import axios from "axios";
 
 import logo from "./logo.svg";
 
@@ -22,6 +23,7 @@ import "./App.css";
 // 라이브러리 가져오기
 
 import data from "./data/data";
+import { useQuery } from "react-query";
 
 let _PUBLIC_URL = process.env.PUBLIC_URL;
 
@@ -59,9 +61,39 @@ function App() {
     });
     let dispatch = useDispatch();
 
+    // react query 사용법
+    // 아래처럼 적어도 되지만
+    // axios.get("https://codingapple1.github.io/userdata.json").then((a) => {
+    //     console.log(a.data);
+    // });
+
+    const [mem, setMem] = useState("asd");
+    // useQuery로 감싸면 좋은 점 => 성공/실패/로딩중 쉽게 파악 가능
+    let result = useQuery("mem", () => {
+        return axios.get("https://codingapple1.github.io/userdata.json").then((a) => {
+            console.log("요청");
+            console.log("1", a.data);
+            return a.data;
+        });
+        // refresh
+        // , { stateTime: 2000 }
+    });
+
     return (
         <>
-            {loading && <Loading />}
+            {result.status}
+            {/* result.data 하면 안찍힘... 로딩이 안대서... */}
+            {mem.name}
+            {result.isLoading && <Loading />}
+
+            <button
+                onClick={() => {
+                    setMem(result.data.name);
+                }}
+            >
+                {mem}
+            </button>
+            {/* <div>여기{result.data}</div> */}
 
             <div className="App">
                 <Navbar bg="dark" variant="dark" sticky="top">
@@ -153,7 +185,6 @@ function Loading() {
 
 function Recent(props) {
     let recent = props.recent;
-    console.log(recent);
 
     return (
         <div>
