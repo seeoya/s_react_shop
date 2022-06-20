@@ -29,6 +29,7 @@ import About from "./routes/About";
 const Detail = lazy(() => import("./routes/Detail.js"));
 const Cart = lazy(() => import("./routes/Cart.js"));
 const Event = lazy(() => import("./routes/Event.js"));
+const New = lazy(() => import("./routes/New.js"));
 
 // 라이브러리 가져오기
 
@@ -131,6 +132,7 @@ function App() {
                             <Nav.Link onClick={() => navigate("/about")}>어바웃</Nav.Link>
                             <Nav.Link onClick={() => navigate("/event")}>이벤트</Nav.Link>
                             <Nav.Link onClick={() => navigate("/cart")}>장바구니</Nav.Link>
+                            <Nav.Link onClick={() => navigate("/new")}>신상</Nav.Link>
 
                             {/* 숫자 넣으면 앞으로 뒤로가기 됨 */}
                             <Nav.Link onClick={() => navigate(1)}>앞으로가기</Nav.Link>
@@ -170,6 +172,7 @@ function App() {
                             <Route path="two" element={<div>생일기념 쿠폰받기</div>} />
                         </Route>
                         <Route path="/cart" element={<Cart />}></Route>
+                        <Route path="/new" element={<New />}></Route>
 
                         {/* 모든 페이지 (404 페이지) */}
                         <Route path="*" element={<div>없는 페이지. 404 페이지</div>} />
