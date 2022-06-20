@@ -161,15 +161,13 @@ function Recent(props) {
             <div>
                 {recent.map((o) => {
                     let fData = data.find((p) => p.id == o);
-
+                    console.log(fData);
                     if (fData) {
                         return (
                             <div key={o}>
                                 <Link to={`/detail/${fData.id}`}>{fData.title}</Link>
                             </div>
                         );
-                    } else {
-                        return <div>일치 상품 없음</div>;
                     }
                 })}
             </div>
