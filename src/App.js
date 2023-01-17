@@ -75,7 +75,9 @@ function App() {
     //     console.log(a.data);
     // });
 
-    const [mem, setMem] = useState("asd");
+    const [mem, setMem] = useState("스테이트 이름");
+    let mem2 = "변수 이름";
+
     // useQuery로 감싸면 좋은 점 => 성공/실패/로딩중 쉽게 파악 가능
     let result = useQuery("mem", () => {
         return axios.get("https://codingapple1.github.io/userdata.json").then((a) => {
@@ -90,19 +92,33 @@ function App() {
     return (
         <>
             {/* <Loading /> */}
-            {result.status}
+            {/* {result.status} */}
             {/* result.data 하면 안찍힘... 로딩이 안대서... */}
-            {mem.name}
+
             {result.isLoading && <Loading />}
+
+            <span style={{ color: "green" }}>{mem}</span>
+            <span id="changeName" style={{ color: "brown" }}>
+                {mem2}
+            </span>
 
             <button
                 onClick={() => {
                     setMem(result.data.name);
+                    mem2 = "Daniel";
+                    console.log(mem2);
                 }}
             >
-                {mem}
+                변경
             </button>
-            {/* <div>여기{result.data}</div> */}
+
+            <button
+                onClick={() => {
+                    document.querySelector("#changeName").innerHTML = "이름 변경";
+                }}
+            >
+                동적 변경
+            </button>
 
             <div className="App">
                 <Navbar bg="dark" variant="dark" sticky="top">
@@ -141,7 +157,7 @@ function App() {
                     </Container>
                 </Navbar>
 
-                <div className="abc">테스트용 app의 디브</div>
+                {/* <div className="abc">테스트용 app의 디브</div> */}
 
                 <Suspense fallback={<Loading />}>
                     <Routes>

@@ -108,25 +108,6 @@ function Detail(props) {
     if (shoe) {
         return (
             <>
-                {stock}
-                <div>{iValue}</div>
-                <input type="text" placeholder="숫자만 입력하세요." onChange={changeIValue} value={iValue} />
-                <br />
-                <button onClick={() => setTtestt(!ttestt)}>박스를 {ttestt ? "끕니다" : "켭니다"}</button>
-                {ttestt ? (
-                    <div className="ttestt" style={{ background: "yellow" }}>
-                        시간제 or 토글 박스
-                    </div>
-                ) : null}
-
-                <DefaultBox>
-                    <DfBtn>123</DfBtn>
-                    <DdBtn className="pp" color="#f0f">
-                        1234
-                    </DdBtn>
-                    <DdBtn big>1234</DdBtn>
-                </DefaultBox>
-
                 <div className="container">
                     <div className="row">
                         <div className="col-md-6">
@@ -144,6 +125,35 @@ function Detail(props) {
                         </div>
                     </div>
                 </div>
+
+                <br />
+                <div>
+                    <h3>input 테스트</h3>
+                    <div>{iValue}</div>
+                    <input type="text" placeholder="숫자만 입력하세요." onChange={changeIValue} value={iValue} />
+                </div>
+
+                <br />
+
+                <div>
+                    <h3>setTime 테스트</h3>
+                    <button onClick={() => setTtestt(!ttestt)}>박스를 {ttestt ? "끕니다" : "켭니다"}</button>
+                    {ttestt ? (
+                        <div className="ttestt" style={{ background: "yellow" }}>
+                            시간제 or 토글 박스
+                        </div>
+                    ) : null}
+                </div>
+
+                {/* <DefaultBox>
+                    <DfBtn>123</DfBtn>
+                    <DdBtn className="pp" color="#f0f">
+                        1234
+                    </DdBtn>
+                    <DdBtn big>1234</DdBtn>
+                </DefaultBox> */}
+
+                <br />
 
                 <Nav variant="pills" defaultActiveKey="link0">
                     <Nav.Item>
@@ -163,8 +173,12 @@ function Detail(props) {
                     </Nav.Item>
                 </Nav>
 
+                <br />
+
                 {/* if문을 컴포넌트로 분리할 수도 있음  */}
                 <TabInner tab={tab} />
+
+                <br />
             </>
         );
     } else {

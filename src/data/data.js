@@ -1,5 +1,8 @@
 // let a = 10;
 // let b = 222;
+
+import axios from "axios";
+
 let data = [
     // array
     {
