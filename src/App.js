@@ -195,9 +195,12 @@ function App() {
                     </Routes>
                 </Suspense>
 
+                <br />
+                <br />
+                <br />
                 <Recent recent={state.recent} />
-                <h3>스테이트</h3>
-                {state.recent}
+                {/* <h3>스테이트</h3>
+                {state.recent} */}
             </div>
         </>
     );
